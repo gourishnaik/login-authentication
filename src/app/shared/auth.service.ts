@@ -8,22 +8,20 @@ export class AuthService {
 
   constructor(private fireauth:AngularFireAuth,private router:Router) { }
 
-
   //login
   login(email:string,password:string){
     this.fireauth.signInWithEmailAndPassword(email,password).then( (res)=>{
    localStorage.setItem('token','true');
-  // this.router.navigate(['/dashboard']);
+  this.router.navigate(['/dashboard']);
 
 //if user is not verified
-if(res.user?.emailVerified==true){
+//if(res.user?.emailVerified==true){
  // this.sendEmailForVerification(res.user)
-  this.router.navigate(['/dashboard']);
-}
-else{
-  this.router.navigate(['/verify'])
-}
-
+  //this.router.navigate(['/dashboard']);
+//}
+//else{
+ // this.router.navigate(['/verify'])
+//}
 
     },err=>{
 alert(err.message)
@@ -35,10 +33,11 @@ this.router.navigate(['/login']);
   register(email:string,password:string){
     this.fireauth.createUserWithEmailAndPassword(email,password).then((res)=>{
       alert("registration is successful")
+     //after registration send email for verification
+     // this.sendEmailForVerification(res)
       this.router.navigate(['/login']);
-      
-      //after registration send email for verification
-      this.sendEmailForVerification(res.user)
+
+    
     },err=>{
       alert(err.message)
       this.router.navigate(['/register'])
@@ -55,7 +54,6 @@ logout(){
   })
 }
 
-
 //forgot password
 forgotpassword(email:string){
 this.fireauth.sendPasswordResetEmail(email).then(()=>{
@@ -64,15 +62,17 @@ this.router.navigate(['/verify'])
     alert(err.message)
   })
 }
-//registration verification
-sendEmailForVerification(user:any){
-//  firebase.auth().currentUser.()
-user.sendEmailVerification().then((res:any)=>{
-  console.log('email sent');
-   this.router.navigate(['/verify']);
-},(err:any)=>{
-  alert("something went wrong! try again")
-})
-}
+
+////sendEmailForVerification(user : any) {
+ // console.log(user);
+ //user.sendSignInLinkToEmail().then((user : any) => {
+  // this.router.navigate(['/verify']);
+  //}, (err : any) => {
+ //   alert('Something went wrong. Not able to send mail to your email.')
+ // })
 
 }
+
+
+
+
