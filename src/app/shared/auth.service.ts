@@ -12,16 +12,16 @@ export class AuthService {
   login(email:string,password:string){
     this.fireauth.signInWithEmailAndPassword(email,password).then( (res)=>{
    localStorage.setItem('token','true');
-  this.router.navigate(['/dashboard']);
+ //this.router.navigate(['/dashboard']);
 
 //if user is not verified
-//if(res.user?.emailVerified==true){
- // this.sendEmailForVerification(res.user)
-  //this.router.navigate(['/dashboard']);
-//}
-//else{
- // this.router.navigate(['/verify'])
-//}
+if(res.user?.emailVerified==true){
+ //this.sendEmailForVerification(res.user)
+  this.router.navigate(['/dashboard']);
+}
+else{
+  this.router.navigate(['/verify'])
+}
 
     },err=>{
 alert(err.message)
@@ -34,10 +34,8 @@ this.router.navigate(['/login']);
     this.fireauth.createUserWithEmailAndPassword(email,password).then((res)=>{
       alert("registration is successful")
      //after registration send email for verification
-     // this.sendEmailForVerification(res)
-      this.router.navigate(['/login']);
-
-    
+      this.sendEmailForVerification(res.user)
+      this.router.navigate(['/login']); 
     },err=>{
       alert(err.message)
       this.router.navigate(['/register'])
@@ -63,16 +61,17 @@ this.router.navigate(['/verify'])
   })
 }
 
-////sendEmailForVerification(user : any) {
- // console.log(user);
- //user.sendSignInLinkToEmail().then((user : any) => {
-  // this.router.navigate(['/verify']);
-  //}, (err : any) => {
- //   alert('Something went wrong. Not able to send mail to your email.')
- // })
+sendEmailForVerification(user : any) {
+  console.log(user);
+ user.sendEmailVerification().then((user : any) => {
+  console.log('sent')
+   this.router.navigate(['/verify']);
+  }, (err : any) => {
+    alert('Something went wrong. Not able to send mail to your email.')
+  })
 
 }
-
+}
 
 
 
