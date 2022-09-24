@@ -7,15 +7,14 @@
                     <div class="card-body">
                         <form>
                             <div class="mb-3">
-                                <h4 class="text-dark">Welcome</h4>
+                                <h4 class="text-danger">hello user</h4>
                             </div>
-
+                            <div class="mb-3">
+                                <p class="text-muted">we have sent link to your email id, please verify it! And then login</p>
+                            </div>
                           
-
-                            <button type="button"(click)="register()" class="btn btn-warning text-center">logout</button>
-                            <div class="row">
-                                                             
-                            </div>
+                          
+                            <button [routerLink]="['/login']" class="btn btn-success">Login </button>
                         </form>
                         </div>
                     </div>
@@ -23,5 +22,6 @@
             </div>
         </div>
     </div>
+
 
 
